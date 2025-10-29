@@ -10,6 +10,7 @@ type VideoCardVimeoProps = {
 
 const VideoCardVimeo = ({ video }: VideoCardVimeoProps) => {
   const [showFullView, setShowFullView] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { currentlyPlaying, setCurrentlyPlaying } = useContext(VideoPlaybackContext);
   const playerRef = useRef<HTMLIFrameElement>(null);
   const modalPlayerRef = useRef<HTMLIFrameElement>(null);
@@ -17,6 +18,11 @@ const VideoCardVimeo = ({ video }: VideoCardVimeoProps) => {
   const handlePlay = () => {
     // Set this video as currently playing
     setCurrentlyPlaying(video.id);
+  };
+
+  const handleError = (error: any) => {
+    console.error('Video error:', error);
+    setError('Failed to load video. Please try again.');
   };
 
   // Handle video playback control - Vimeo doesn't have pause method like Mux
@@ -56,7 +62,7 @@ const VideoCardVimeo = ({ video }: VideoCardVimeoProps) => {
       }}
       transition={{ duration: 0.2 }}
     >
-      <div style={{ aspectRatio: '16/9', width: '100%' }}>
+      <div style={{ aspectRatio: '16/9', width: '100%', position: 'relative' }}>
         <iframe
           ref={playerRef}
           src={`${video.id.replace('https://vimeo.com/', 'https://player.vimeo.com/video/')}?autoplay=0&title=0&byline=0&portrait=0`}
@@ -70,7 +76,27 @@ const VideoCardVimeo = ({ video }: VideoCardVimeoProps) => {
               }
             });
           }}
+          onError={handleError}
         />
+        {error && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            textAlign: 'center',
+            padding: '10px'
+          }}>
+            {error}
+          </div>
+        )}
       </div>
       <div style={{ padding: '16px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div>
@@ -179,7 +205,7 @@ const VideoCardVimeo = ({ video }: VideoCardVimeoProps) => {
             >
               ✕
             </button>
-            <div style={{ aspectRatio: '16/9', width: '100%' }}>
+            <div style={{ aspectRatio: '16/9', width: '100%', position: 'relative' }}>
               <iframe
                 ref={modalPlayerRef}
                 src={`${video.id.replace('https://vimeo.com/', 'https://player.vimeo.com/video/')}?autoplay=1&title=0&byline=0&portrait=0`}
@@ -193,7 +219,27 @@ const VideoCardVimeo = ({ video }: VideoCardVimeoProps) => {
                     }
                   });
                 }}
+                onError={handleError}
               />
+              {error && (
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '18px',
+                  textAlign: 'center',
+                  padding: '20px'
+                }}>
+                  {error}
+                </div>
+              )}
             </div>
             <h2 style={{ color: '#F1F5F9', marginTop: '20px' }}>{video.title}</h2>
             <p style={{ color: '#94A3B8' }}>{video.description}</p>

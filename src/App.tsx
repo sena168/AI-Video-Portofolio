@@ -40,176 +40,78 @@ function App() {
           onClose={() => setShowSplash(false)}
         />
       )}
-      <div
-        style={{
-          minHeight: '100vh',
-          backgroundImage: 'url(/povmaintrans.png)',
-          backgroundSize: '100% auto',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'top center',
-          backgroundColor: '#0F172A',
-          color: '#F1F5F9',
-          padding: '20px',
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            padding: '20px',
-            borderRadius: '10px',
-            maxWidth: '800px',
-            margin: '40px auto 20px auto',
-          }}
-        >
-          <h1
-            style={{
-              fontSize: '3rem',
-              textAlign: 'center',
-              color: 'white',
-              textShadow:
-                '2px 2px 4px #000000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
-            }}
-          >
+      <div className="min-h-screen bg-[url('/povmaintrans.png')] bg-cover bg-center bg-slate-900 text-slate-100 p-5">
+        <div className="bg-black/70 p-5 rounded-lg max-w-2xl mx-auto my-10 mb-5">
+          <h1 className="text-4xl text-center text-white drop-shadow-lg">
             Prompt One Visuals
           </h1>
-          <p
-            style={{
-              fontSize: '1.5rem',
-              textAlign: 'center',
-              color: '#94A3B8',
-              textShadow:
-                '1px 1px 2px #000000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
-            }}
-          >
+          <p className="text-xl text-center text-slate-400 drop-shadow-md">
             AI Visionary | Video Creator
           </p>
         </div>
         <AboutSection />
 
-        <div style={{ maxWidth: '1200px', margin: '40px auto' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '20px',
-              marginBottom: '30px',
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              padding: '10px',
-              borderRadius: '10px',
-              maxWidth: '600px',
-              margin: '20px auto 30px auto',
-            }}
-          >
+        <div className="max-w-4xl mx-auto my-10">
+          <div className="flex justify-center gap-5 mb-8 bg-black/70 p-2.5 rounded-lg max-w-lg mx-auto my-5">
             <button
-              style={{
-                padding: '8px 16px',
-                backgroundColor:
-                  activeTab === 'all' ? '#3B82F6' : 'transparent',
-                color: activeTab === 'all' ? 'white' : '#94A3B8',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
+              className={`px-4 py-2 rounded cursor-pointer ${
+                activeTab === 'all' ? 'bg-blue-500 text-white' : 'bg-transparent text-slate-400'
+              }`}
               onClick={() => setActiveTab('all')}
             >
               All
             </button>
             <button
-              style={{
-                padding: '8px 16px',
-                backgroundColor:
-                  activeTab === 'ads' ? '#3B82F6' : 'transparent',
-                color: activeTab === 'ads' ? 'white' : '#94A3B8',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
+              className={`px-4 py-2 rounded cursor-pointer ${
+                activeTab === 'ads' ? 'bg-blue-500 text-white' : 'bg-transparent text-slate-400'
+              }`}
               onClick={() => setActiveTab('ads')}
             >
               Ads & Promo
             </button>
             <button
-              style={{
-                padding: '8px 16px',
-                backgroundColor:
-                  activeTab === 'music' ? '#3B82F6' : 'transparent',
-                color: activeTab === 'music' ? 'white' : '#94A3B8',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
+              className={`px-4 py-2 rounded cursor-pointer ${
+                activeTab === 'music' ? 'bg-blue-500 text-white' : 'bg-transparent text-slate-400'
+              }`}
               onClick={() => setActiveTab('music')}
             >
               Music Videos
             </button>
             <button
-              style={{
-                padding: '8px 16px',
-                backgroundColor:
-                  activeTab === 'humor' ? '#3B82F6' : 'transparent',
-                color: activeTab === 'humor' ? 'white' : '#94A3B8',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
+              className={`px-4 py-2 rounded cursor-pointer ${
+                activeTab === 'humor' ? 'bg-blue-500 text-white' : 'bg-transparent text-slate-400'
+              }`}
               onClick={() => setActiveTab('humor')}
             >
               Humor & Anecdote
             </button>
             <button
-              style={{
-                padding: '8px 16px',
-                backgroundColor:
-                  activeTab === 'tutorials' ? '#3B82F6' : 'transparent',
-                color: activeTab === 'tutorials' ? 'white' : '#94A3B8',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
+              className={`px-4 py-2 rounded cursor-pointer ${
+                activeTab === 'tutorials' ? 'bg-blue-500 text-white' : 'bg-transparent text-slate-400'
+              }`}
               onClick={() => setActiveTab('tutorials')}
             >
               Tutorials
             </button>
           </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: '20px',
-              marginTop: '30px',
-            }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
             {filteredVideos.length > 0 ? (
               filteredVideos.map((video) => (
-                <div key={video.id} style={{ margin: '10px' }}>
+                <div key={video.id} className="m-2.5">
                   <VideoCard video={video} />
                 </div>
               ))
             ) : (
-              <p style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
+              <p className="col-span-full text-center">
                 No videos found in this category.
               </p>
             )}
           </div>
         </div>
 
-        <div
-          style={{
-            textAlign: 'center',
-            marginTop: '100px',
-            maxWidth: '600px',
-            margin: '0 auto',
-          }}
-        >
-          <h2
-            style={{
-              fontSize: '2rem',
-              marginBottom: '20px',
-              textShadow:
-                '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
-            }}
-          >
+        <div className="text-center mt-24 max-w-lg mx-auto">
+          <h2 className="text-2xl mb-5 drop-shadow-md">
             Contact Me
           </h2>
           <div
@@ -221,135 +123,45 @@ function App() {
             }}
           >
             <form
-              action={`https://formspree.io/f/xdkwlorz`}
+              action={`https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID}`}
               method='POST'
-              style={{ marginBottom: '20px', width: '100%' }}
+              className="mb-5 w-full"
             >
               <input
                 type='text'
                 name='name'
                 placeholder='Your Name'
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  marginBottom: '10px',
-                  backgroundColor: '#1E293B',
-                  border: '1px solid #334155',
-                  color: 'white',
-                  borderRadius: '4px',
-                }}
+                className="w-full p-3 mb-2.5 bg-slate-800 border border-slate-700 text-white rounded"
                 required
               />
               <input
                 type='email'
                 name='email'
                 placeholder='Your Email'
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  marginBottom: '10px',
-                  backgroundColor: '#1E293B',
-                  border: '1px solid #334155',
-                  color: 'white',
-                  borderRadius: '4px',
-                }}
+                className="w-full p-3 mb-2.5 bg-slate-800 border border-slate-700 text-white rounded"
                 required
               />
               <textarea
                 name='message'
                 placeholder='Your Question'
                 rows={4}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  marginBottom: '10px',
-                  backgroundColor: '#1E293B',
-                  border: '1px solid #334155',
-                  color: 'white',
-                  resize: 'vertical',
-                  borderRadius: '4px',
-                }}
+                className="w-full p-3 mb-2.5 bg-slate-800 border border-slate-700 text-white resize-vertical rounded"
               />
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '10px',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                  padding: '10px',
-                  borderRadius: '10px',
-                  width: '100%',
-                }}
-              >
+              <div className="flex gap-2.5 items-center justify-center bg-black/70 p-2.5 rounded-lg w-full">
                 <button
                   type='submit'
-                  style={{
-                    flex: 1,
-                    padding: '12px',
-                    backgroundColor: '#3B82F6',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
-                    transition: 'transform 0.2s, background-color 0.3s',
-                    height: '48px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.backgroundColor = '#2563EB')
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.backgroundColor = '#3B82F6')
-                  }
-                  onMouseDown={(e) =>
-                    (e.currentTarget.style.transform = 'scale(0.95)')
-                  }
-                  onMouseUp={(e) =>
-                    (e.currentTarget.style.transform = 'scale(1)')
-                  }
+                  className="flex-1 p-3 bg-blue-500 text-white border-none rounded cursor-pointer font-bold transition-transform duration-200 h-12 flex items-center justify-center hover:bg-blue-600"
                 >
                   Send Message
                 </button>
 
-                <div style={{ fontWeight: 'bold', color: 'white' }}>or</div>
+                <div className="font-bold text-white">or</div>
 
                 <a
-                  href='https://wa.me/6285814668168?text=Hai%20Prompt%20One!%20Mau%20tau%20donk%20video%20seperti%20apa%20yang%20bisa%20kamu%20buatin%20buat%20aku?'
+                  href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}?text=Hai%20Prompt%20One!%20Mau%20tau%20donk%20video%20seperti%20apa%20yang%20bisa%20kamu%20buatin%20buat%20aku?`}
                   target='_blank'
                   rel='noopener noreferrer'
-                  style={{
-                    flex: 1,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    padding: '12px 20px',
-                    backgroundColor: '#25D366',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
-                    textDecoration: 'none',
-                    transition: 'transform 0.2s, background-color 0.3s',
-                    height: '48px',
-                  }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.backgroundColor = '#128C7E')
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.backgroundColor = '#25D366')
-                  }
-                  onMouseDown={(e) =>
-                    (e.currentTarget.style.transform = 'scale(0.95)')
-                  }
-                  onMouseUp={(e) =>
-                    (e.currentTarget.style.transform = 'scale(1)')
-                  }
+                  className="flex-1 inline-flex items-center justify-center gap-2 p-3 bg-green-500 text-white border-none rounded cursor-pointer font-bold no-underline transition-transform duration-200 h-12 hover:bg-green-600"
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -366,16 +178,7 @@ function App() {
             </form>
           </div>
 
-          <footer
-            style={{
-              textAlign: 'center',
-              marginTop: '100px',
-              paddingBottom: '20px',
-              color: '#94A3B8',
-              textShadow:
-                '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
-            }}
-          >
+          <footer className="text-center mt-24 pb-5 text-slate-400 drop-shadow-md">
             © 2025 Prompt One Visuals Portfolio. All rights reserved.
           </footer>
         </div>

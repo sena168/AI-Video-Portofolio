@@ -34,3 +34,5 @@ external-scripts/
 *.sw?
 
 external-scripts
+
+externals

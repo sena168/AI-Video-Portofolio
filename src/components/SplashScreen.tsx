@@ -9,6 +9,7 @@ interface SplashScreenProps {
 const SplashScreen = ({ videoSrc, duration = 5000, onClose }: SplashScreenProps) => {
   const [visible, setVisible] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -34,38 +35,16 @@ const SplashScreen = ({ videoSrc, duration = 5000, onClose }: SplashScreenProps)
     }
   };
 
+  const handleError = (e: any) => {
+    console.error('Video error:', e);
+    setError('Failed to load splash video. Please try again.');
+  };
+
   if (!visible) return null;
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
-      zIndex: 9999,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      transition: 'opacity 0.5s ease-out',
-      opacity: visible ? 1 : 0,
-      pointerEvents: visible ? 'auto' : 'none',
-    }}>
-      <div style={{
-        position: 'relative',
-        width: '90%',
-        maxWidth: '1200px',
-        height: '70vh',
-        maxHeight: '700px',
-        backgroundColor: '#000',
-        borderRadius: '8px',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+    <div className={`fixed top-0 left-0 w-full h-full bg-black/70 z-[9999] flex justify-center items-center transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'} ${visible ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+      <div className="relative w-[90%] max-w-4xl h-[70vh] max-h-[700px] bg-black rounded-lg shadow-2xl overflow-hidden flex items-center justify-center">
         <button 
           onClick={handleClose}
           style={{
@@ -89,23 +68,40 @@ const SplashScreen = ({ videoSrc, duration = 5000, onClose }: SplashScreenProps)
         >
           ✕
         </button>
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-          style={{
+        {error ? (
+          <div style={{
             width: '100%',
             height: '100%',
-            objectFit: 'contain'
-          }}
-          onEnded={handleClose}
-          onError={(e) => console.error('Video error:', e)}
-          onLoadedData={() => console.log('Video loaded successfully')}
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '18px',
+            textAlign: 'center',
+            padding: '20px'
+          }}>
+            {error}
+          </div>
+        ) : (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            playsInline
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain'
+            }}
+            onEnded={handleClose}
+            onError={handleError}
+            onLoadedData={() => console.log('Video loaded successfully')}
+          >
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
 
         {isMuted && (
           <button

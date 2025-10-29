@@ -11,6 +11,7 @@ type VideoCardMuxProps = {
 
 const VideoCardMux = ({ video }: VideoCardMuxProps) => {
   const [showFullView, setShowFullView] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { currentlyPlaying, setCurrentlyPlaying } = useContext(VideoPlaybackContext);
   const playerRef = useRef<any>(null);
   const modalPlayerRef = useRef<any>(null);
@@ -18,6 +19,11 @@ const VideoCardMux = ({ video }: VideoCardMuxProps) => {
   const handlePlay = () => {
     // Set this video as currently playing
     setCurrentlyPlaying(video.id);
+  };
+
+  const handleError = (error: any) => {
+    console.error('Video error:', error);
+    setError('Failed to load video. Please try again.');
   };
 
   // Handle video playback control
@@ -62,7 +68,7 @@ const VideoCardMux = ({ video }: VideoCardMuxProps) => {
       }}
       transition={{ duration: 0.2 }}
     >
-      <div style={{ aspectRatio: '16/9', width: '100%' }}>
+      <div style={{ aspectRatio: '16/9', width: '100%', position: 'relative' }}>
         <MuxPlayer
           ref={playerRef}
           streamType="on-demand"
@@ -74,7 +80,27 @@ const VideoCardMux = ({ video }: VideoCardMuxProps) => {
           thumbnailTime={video.thumbnailTime || 0}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           onPlay={handlePlay}
+          onError={handleError}
         />
+        {error && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            textAlign: 'center',
+            padding: '10px'
+          }}>
+            {error}
+          </div>
+        )}
       </div>
       <div style={{ padding: '16px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div>
@@ -187,7 +213,7 @@ const VideoCardMux = ({ video }: VideoCardMuxProps) => {
             >
               ✕
             </button>
-            <div style={{ aspectRatio: '16/9', width: '100%' }}>
+            <div style={{ aspectRatio: '16/9', width: '100%', position: 'relative' }}>
               <MuxPlayer
                 ref={modalPlayerRef}
                 streamType="on-demand"
@@ -201,7 +227,27 @@ const VideoCardMux = ({ video }: VideoCardMuxProps) => {
                 thumbnailTime={video.thumbnailTime || 0}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 onPlay={handlePlay}
+                onError={handleError}
               />
+              {error && (
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '18px',
+                  textAlign: 'center',
+                  padding: '20px'
+                }}>
+                  {error}
+                </div>
+              )}
             </div>
             <h2 style={{ color: '#F1F5F9', marginTop: '20px' }}>{video.title}</h2>
             <p style={{ color: '#94A3B8' }}>{video.description}</p>

@@ -1,16 +1,15 @@
-// MongoDB implementation commented out for Vercel deployment
-// import { MongoClient, ServerApiVersion } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
-// const uri = "mongodb+srv://promptonevisuals_db_user:40esNU5zFP8r8DAm@promptonevisualsmongodb.idegnge.mongodb.net/?retryWrites=true&w=majority&appName=PromptOneVisualsMongoDB";
+const uri = import.meta.env.VITE_MONGODB_URI;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(uri, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   }
-// });
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
 // Database and collection names
 export const DB_NAME = 'portovideo';
@@ -19,12 +18,12 @@ export const COLLECTIONS = {
   CONTACTS: 'contacts'
 };
 
-// Connect to MongoDB - commented out for now
+// Connect to MongoDB
 export async function connectToDatabase() {
   try {
-    // await client.connect();
-    console.log("MongoDB connection disabled for deployment");
-    return null;
+    await client.connect();
+    console.log("Connected to MongoDB");
+    return client.db(DB_NAME);
   } catch (error) {
     console.error("Failed to connect to MongoDB", error);
     throw error;
@@ -33,7 +32,7 @@ export async function connectToDatabase() {
 
 // Close the connection
 export async function closeDatabaseConnection() {
-  // await client.close();
+  await client.close();
   console.log("MongoDB connection closed");
 }
 
