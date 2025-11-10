@@ -6,20 +6,28 @@ interface SplashScreenProps {
   onClose?: () => void;
 }
 
-const SplashScreen = ({ videoSrc, duration = 5000, onClose }: SplashScreenProps) => {
+const SplashScreen = ({
+  videoSrc,
+  duration = 15000,
+  onClose,
+}: SplashScreenProps) => {
   const [visible, setVisible] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-      if (onClose) onClose();
-    }, duration);
+    // Only start the timer once the video is loaded to ensure it plays completely
+    if (isVideoLoaded) {
+      const timer = setTimeout(() => {
+        setVisible(false);
+        if (onClose) onClose();
+      }, duration);
 
-    return () => clearTimeout(timer);
-  }, [duration, onClose]);
+      return () => clearTimeout(timer);
+    }
+  }, [isVideoLoaded, duration, onClose]);
 
   const handleClose = () => {
     setVisible(false);
@@ -40,12 +48,21 @@ const SplashScreen = ({ videoSrc, duration = 5000, onClose }: SplashScreenProps)
     setError('Failed to load splash video. Please try again.');
   };
 
+  const handleVideoLoad = () => {
+    setIsVideoLoaded(true);
+    console.log('Video loaded successfully');
+  };
+
   if (!visible) return null;
 
   return (
-    <div className={`fixed top-0 left-0 w-full h-full bg-black/70 z-[9999] flex justify-center items-center transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'} ${visible ? 'pointer-events-auto' : 'pointer-events-none'}`}>
-      <div className="relative w-[90%] max-w-4xl h-[70vh] max-h-[700px] bg-black rounded-lg shadow-2xl overflow-hidden flex items-center justify-center">
-        <button 
+    <div
+      className={`fixed top-0 left-0 w-full h-full bg-black/70 z-[9999] flex justify-center items-center transition-opacity duration-500 ${
+        visible ? 'opacity-100' : 'opacity-0'
+      } ${visible ? 'pointer-events-auto' : 'pointer-events-none'}`}
+    >
+      <div className='relative w-[90%] max-w-4xl h-[70vh] max-h-[700px] bg-black rounded-lg shadow-2xl overflow-hidden flex items-center justify-center'>
+        <button
           onClick={handleClose}
           style={{
             position: 'absolute',
@@ -69,18 +86,20 @@ const SplashScreen = ({ videoSrc, duration = 5000, onClose }: SplashScreenProps)
           ✕
         </button>
         {error ? (
-          <div style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            color: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px',
-            textAlign: 'center',
-            padding: '20px'
-          }}>
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              color: 'white',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '18px',
+              textAlign: 'center',
+              padding: '20px',
+            }}
+          >
             {error}
           </div>
         ) : (
@@ -92,18 +111,18 @@ const SplashScreen = ({ videoSrc, duration = 5000, onClose }: SplashScreenProps)
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'contain'
+              objectFit: 'contain',
             }}
             onEnded={handleClose}
             onError={handleError}
-            onLoadedData={() => console.log('Video loaded successfully')}
+            onLoadedData={handleVideoLoad}
           >
-            <source src={videoSrc} type="video/mp4" />
+            <source src={videoSrc} type='video/mp4' />
             Your browser does not support the video tag.
           </video>
         )}
 
-        {isMuted && (
+        {isMuted && !error && (
           <button
             onClick={handleUnmute}
             style={{
