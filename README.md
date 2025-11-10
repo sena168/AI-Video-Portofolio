@@ -1,95 +1,41 @@
-# React + TypeScript + Vite
+# Prompt One Visuals - AI Video Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to Prompt One Visuals, a professional portfolio showcasing creative AI-generated video content and visual storytelling. This portfolio demonstrates expertise in AI video production across multiple genres and applications.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Prompt One Visuals is a specialized portfolio featuring AI-powered video creation, including promotional content, music videos, educational tutorials, and creative humor pieces. The platform leverages modern web technologies to deliver a seamless viewing experience for showcasing innovative visual content.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Curated Video Collection**: Organized by category (Ads & Promo, Music Videos, Humor & Anecdote, Tutorials)
+- **Responsive Design**: Optimized for viewing across all devices
+- **Professional Video Player**: Integrated with Mux for high-quality streaming
+- **Interactive Gallery**: Filter videos by category with smooth transitions
+- **Splash Screen Experience**: Engaging introduction to the portfolio
+- **Contact Integration**: Direct contact options via form and WhatsApp
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 with TypeScript
+- Vite Build Tool
+- Tailwind CSS for styling
+- Mux Player for video streaming
+- Framer Motion for animations
+- React Router for navigation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Portfolio Categories
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The portfolio includes diverse video content:
+- **Advertising & Promotional**: Creative commercial content and marketing materials
+- **Music Videos**: Original compositions and AI-generated music content
+- **Humor & Entertainment**: Creative and engaging comedic content
+- **Tutorials & Educational**: Instructional and educational video content
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+## Contact
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Interested in AI video production services? Connect with us through the contact form on the website or reach out directly via WhatsApp for inquiries about custom video projects and AI-powered visual content creation.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+## Development
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
-
-## Project Notes
-
-### Redundancy Findings (To Be Fixed Later)
-- **Unused Components**: `TabNavigation.tsx`, `VideoGrid.tsx`, `ContactForm.tsx`, `Footer.tsx`, `Hero.tsx` are created but not imported/used in `App.tsx`. Instead, tab buttons, video grid, contact form, footer, and hero content are hardcoded directly in `App.tsx`.
-- **Unused Dependencies**: `react-router-dom`, `framer-motion` (only used in unused components), `lucide-react`, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate` appear unused.
-- **Unused Libraries**: `src/lib/db.ts` and `src/lib/videoService.ts` have MongoDB functionality commented out for Vercel deployment.
-- **Duplicate Logic**: `VideoCardMux.tsx` and `VideoCardVimeo.tsx` have very similar modal and UI structures.
-- **Hardcoded Content**: About section, hero section, contact form, and footer are all inline in `App.tsx` instead of using the separate component files.
-
-### Media Decode Error Analysis
-The "PIPELINE_ERROR_DECODE: video decode error!" in Vercel deployment is likely due to:
-- Browser/platform-specific video decoding issues
-- Codec compatibility problems with Vercel's hosting environment
-- Video format issues (MP4 files in `/public/`)
-- Network/CDN issues affecting video streaming
-- Mux player configuration or API issues
-
-### Splash Screen Changes
-- Video source changed from `/povintrovid.mp4` to `/splashPOV.mp4`
-- Removed `muted` attribute to enable sound playback
-- Note: Browsers may require user interaction before allowing unmuted autoplay
+This portfolio is built with modern web technologies and is continuously updated with new video content. For technical questions about the implementation, please reach out through the contact form.
